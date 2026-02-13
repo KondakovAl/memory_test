@@ -15,6 +15,7 @@ import {
   generateGrid,
   generateRoundDigit,
   getCorrectAnswer,
+  getCorrectCellIndex,
   type GridCell,
 } from "../utils";
 import { GridCell as GridCellComponent } from "../components/GridCell";
@@ -66,8 +67,13 @@ export function GridPlayPage() {
 
   const handleSubmit = useCallback(() => {
     const correctAnswer = getCorrectAnswer(cells, roundDigit);
+    const correctCellIndex = getCorrectCellIndex(cells, roundDigit);
     const value = parseInt(answer.trim(), 10);
-    const correct = !Number.isNaN(value) && value === correctAnswer;
+    const correct =
+      !Number.isNaN(value) &&
+      value >= 1 &&
+      value <= cells.length &&
+      value === correctCellIndex;
     const timeMs = Date.now() - answerStartRef.current;
     addRoundResult({ correct, correctAnswer, timeMs });
     goToNext();
@@ -88,14 +94,15 @@ export function GridPlayPage() {
           Цифра раунда: {roundDigit}
         </Text>
         <Text size="sm" c="dimmed" ta="center">
-          Клик по клетке подставит число в поле ответа
+          Введите порядковый номер клетки (1–{cells.length})
         </Text>
         <SimpleGrid cols={gridSize} spacing="md" w="fit-content" mx="auto">
           {cells.map((cell, i) => (
             <GridCellComponent
               key={i}
               cell={cell}
-              onSelect={(value) => setAnswer(String(value))}
+              cellIndex={i + 1}
+              onSelect={(index) => setAnswer(String(index))}
             />
           ))}
         </SimpleGrid>
@@ -114,11 +121,11 @@ export function GridPlayPage() {
         <Stack gap="xs">
           <TextInput
             ref={inputRef}
-            label="Число в клетке, ближайшей к цифре раунда"
-            placeholder="Число"
+            label={`Номер клетки (1–${cells.length})`}
+            placeholder="№"
             type="number"
-            min={10}
-            max={99}
+            min={1}
+            max={cells.length}
             value={answer}
             onChange={(e) => setAnswer(e.currentTarget.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}

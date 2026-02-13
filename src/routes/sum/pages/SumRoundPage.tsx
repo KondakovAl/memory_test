@@ -12,7 +12,7 @@ import {
 import { Timer } from "~/components/Timer";
 import { useSumSession } from "../context/SumSessionContext";
 import { randomAddend } from "../utils";
-import { CELL_SIZE } from "../constants";
+import { CELL_SIZE, ANSWER_INPUT_WIDTH } from "../constants";
 
 const cellStyle = {
   display: "flex" as const,
@@ -105,7 +105,8 @@ export function SumRoundPage() {
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             onBlur={() => inputRef.current?.focus()}
             style={{
-              width: CELL_SIZE,
+              width: ANSWER_INPUT_WIDTH,
+              minWidth: ANSWER_INPUT_WIDTH,
               height: CELL_SIZE,
               boxSizing: "border-box",
             }}

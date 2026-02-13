@@ -1,5 +1,13 @@
 import { Link } from "@tanstack/react-router";
-import { Title, Text, Stack, SimpleGrid, Card, Group, Button } from "@mantine/core";
+import {
+  Title,
+  Text,
+  Stack,
+  SimpleGrid,
+  Card,
+  Group,
+  Button,
+} from "@mantine/core";
 import { ActivityCardHint } from "~/components/ActivityCardHint";
 import { useGameResults } from "~/storage/gameResults";
 

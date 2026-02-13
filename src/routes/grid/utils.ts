@@ -1,4 +1,9 @@
-import { CENTER_MIN, CENTER_MAX, ROUND_DIGIT_MIN, ROUND_DIGIT_MAX } from "./constants";
+import {
+  CENTER_MIN,
+  CENTER_MAX,
+  ROUND_DIGIT_MIN,
+  ROUND_DIGIT_MAX,
+} from "./constants";
 
 export type GridCell = {
   centerNumber: number;
@@ -32,7 +37,10 @@ export function generateRoundDigit(): number {
 }
 
 /** Число в клетке, ближайшей к N. При равенстве расстояний — первое из таких. */
-export function getCorrectAnswer(cells: GridCell[], roundDigit: number): number {
+export function getCorrectAnswer(
+  cells: GridCell[],
+  roundDigit: number,
+): number {
   let best = cells[0];
   let bestDist = Math.abs(cells[0].centerNumber - roundDigit);
 
@@ -45,4 +53,23 @@ export function getCorrectAnswer(cells: GridCell[], roundDigit: number): number 
   }
 
   return best.centerNumber;
+}
+
+/** Порядковый номер ячейки (1-based), ближайшей к N. */
+export function getCorrectCellIndex(
+  cells: GridCell[],
+  roundDigit: number,
+): number {
+  let bestIndex = 0;
+  let bestDist = Math.abs(cells[0].centerNumber - roundDigit);
+
+  for (let i = 1; i < cells.length; i++) {
+    const d = Math.abs(cells[i].centerNumber - roundDigit);
+    if (d < bestDist) {
+      bestDist = d;
+      bestIndex = i;
+    }
+  }
+
+  return bestIndex + 1;
 }

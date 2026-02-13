@@ -146,11 +146,11 @@ const sumCellStyle = {
 function SumHint() {
   return (
     <Group gap={4} justify="center" wrap="nowrap">
-      <div style={sumCellStyle}>5</div>
+      <div style={sumCellStyle}>55</div>
       <div style={{ ...sumCellStyle, color: "var(--mantine-color-dimmed)" }}>
         ?
       </div>
-      <div style={sumCellStyle}>9</div>
+      <div style={sumCellStyle}>19</div>
     </Group>
   );
 }

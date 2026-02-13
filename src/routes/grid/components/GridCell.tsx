@@ -6,6 +6,7 @@ const cellStyle = {
   display: "flex" as const,
   alignItems: "center" as const,
   justifyContent: "center" as const,
+  position: "relative" as const,
   borderRadius: 8,
   border: "2px solid var(--mantine-color-gray-3)",
   backgroundColor: "var(--mantine-color-gray-0)",
@@ -15,20 +16,36 @@ const cellStyle = {
 
 type Props = {
   cell: GridCellType;
-  onSelect?: (value: number) => void;
+  /** Порядковый номер ячейки от 1 (показывается сверху справа) */
+  cellIndex: number;
+  onSelect?: (cellIndex: number) => void;
 };
 
-export function GridCell({ cell, onSelect }: Props) {
+export function GridCell({ cell, cellIndex, onSelect }: Props) {
   const content = (
-    <Text fw={700} size="xl">
-      {cell.centerNumber}
-    </Text>
+    <>
+      <Text
+        size="xs"
+        c="dimmed"
+        fw={500}
+        style={{
+          position: "absolute",
+          top: 4,
+          left: 6,
+        }}
+      >
+        {cellIndex}
+      </Text>
+      <Text fw={700} size="xl">
+        {cell.centerNumber}
+      </Text>
+    </>
   );
 
   if (onSelect) {
     return (
       <UnstyledButton
-        onClick={() => onSelect(cell.centerNumber)}
+        onClick={() => onSelect(cellIndex)}
         style={cellStyle}
         styles={{
           root: {
